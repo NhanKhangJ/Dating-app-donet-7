@@ -32,9 +32,7 @@ public class AppUser
     public string Country  { get; set; }
 
     public List<Photo> Photos { get; set; } =new ();
-
-    // public int GetAge()
-    // {
-    //     return DateOFBirth.CalculateAge();
-    // }
+    
+    public List<UserLike> LikeByUsers { get; set; } 
+    public List <UserLike> LikedUsers { get; set; }
 }
