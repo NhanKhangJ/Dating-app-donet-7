@@ -33,7 +33,6 @@ export class AccountService {
           .pipe(
             map((user: User) =>{
               if(user){
-              
                 this.setCurrentUser(user);
               }
             })
@@ -43,6 +42,10 @@ export class AccountService {
   setCurrentUser(user: User){
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
+  }
+
+  getCurrentUserLogin(){
+    return JSON.parse(localStorage.getItem('user')!) as User; 
   }
 
   logOut(){

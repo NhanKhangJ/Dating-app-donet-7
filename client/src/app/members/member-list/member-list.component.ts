@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, take } from 'rxjs';
 import { Member } from 'src/app/_models/member';
 import { Pagination } from 'src/app/_models/pagination';
-import { User } from 'src/app/_models/user';
 import { UserParams } from 'src/app/_models/userParams';
 import { AccountService } from 'src/app/_services/account.service';
 import { MembersService } from 'src/app/_services/members.service';
@@ -19,10 +18,19 @@ export class MemberListComponent implements OnInit {
   genderList = [
     {value: 'male', display: 'Males'},
     {value: 'female', display: 'Females'}
-  ]
+  ];
 
-  constructor(private memberService: MembersService){
+  constructor(private memberService: MembersService, private accountService: AccountService){
     this.userParams = this.memberService.getUserParrams();
+    // if(!this.userParams){
+    //   this.accountService.currentUser$.pipe(take(1)).subscribe({
+    //     next: user => {
+    //       if(user) {
+    //         this.userParams = new UserParams(user);
+    //       }
+    //     }
+    //   })
+    // }
   }
   
   ngOnInit(): void {
@@ -39,7 +47,7 @@ export class MemberListComponent implements OnInit {
             this.pagination = response.pagination;
           }
         }
-      })
+      });
     }
   }
 
