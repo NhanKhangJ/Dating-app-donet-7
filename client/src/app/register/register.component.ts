@@ -3,6 +3,8 @@ import { AccountService } from '../_services/account.service';
 import { ToastrService } from 'ngx-toastr';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserParams } from '../_models/userParams';
+import { MembersService } from '../_services/members.service';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +17,7 @@ export class RegisterComponent implements OnInit {
   maxDate: Date = new Date();
   validationErrors: string[] | undefined;
 
-  constructor(private accountService: AccountService, private toastr: ToastrService, private fb: FormBuilder, private router: Router){
+  constructor(private accountService: AccountService, private toastr: ToastrService, private fb: FormBuilder, private router: Router, private memberService: MembersService){
 
   }
   ngOnInit(): void {
@@ -54,7 +56,9 @@ export class RegisterComponent implements OnInit {
     const dob = this.getDateOnly(this.registerForm.controls['dateOfBirth'].value);
     const values = {...this.registerForm.value, dateOfBirth: dob};
     this.accountService.register(values).subscribe({
-      next: () =>{
+      next: (user) =>{
+        const userParams =new UserParams(user);
+        this.memberService.setUserParams(userParams);
         this.router.navigateByUrl('/members');
       },
       error: respone => {

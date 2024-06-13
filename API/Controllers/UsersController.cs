@@ -21,6 +21,8 @@ namespace API.Controllers{
             _photoService = photoService;
         }
 
+        //Override the Authorize on the top level
+        // [Authorize(Roles = "Admin")]
         [HttpGet]
         public  async Task<ActionResult<PagedList<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
         {   
@@ -36,7 +38,7 @@ namespace API.Controllers{
             Response.AddPaginationHeader(new PaginationHeaders(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages));
             return Ok(users);
         }
-    
+
         [HttpGet("{username}")] // /api/users/2
         public async Task <ActionResult<MemberDto>> GetUser(string username)
         {
