@@ -26,6 +26,7 @@ export class NavComponent implements OnInit {
         const userParams =new UserParams(user);
         this.memberService.setUserParams(userParams);
         this.router.navigateByUrl('/members');
+        this.model = {};
       }
     })
   }
